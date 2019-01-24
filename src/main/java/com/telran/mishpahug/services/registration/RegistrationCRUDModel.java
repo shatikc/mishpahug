@@ -3,6 +3,7 @@ package com.telran.mishpahug.services.registration;
 import com.telran.mishpahug.api.ResponseDTO.MessageDTORes;
 import com.telran.mishpahug.entities.Profile;
 import com.telran.mishpahug.entities.StaticFields;
+import com.telran.mishpahug.repository.IRegistrationCRUD;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,21 +19,21 @@ import java.util.Optional;
 public class RegistrationCRUDModel implements IRegistration {
 
     @Autowired
-    com.telran.mishpahug.repository.IRegistration testdb;
+    IRegistrationCRUD regRepo;
 
     @Override
     @Transactional
-    public ResponseEntity<Object> addNewUser(String headers) {
+    public ResponseEntity addNewUser(String headers) {
         String [] emailPass = parseHeaders(headers);
         if(emailPass.length<2||!validator(emailPass[0])||emailPass[1].length()<6){
             return new ResponseEntity<>(new MessageDTORes(422,"Invalid data!"), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        Optional<Profile> exist = testdb.findById(emailPass[0]);
+        Optional exist = regRepo.findById(emailPass[0]);
         if(exist.isPresent()){return new ResponseEntity<>(new MessageDTORes(409,"User exists!"),HttpStatus.CONFLICT);}
         Profile prof = new Profile();
         prof.setEmail(emailPass[0]);
         prof.setPassword(emailPass[1]);
-        testdb.save(prof);
+        regRepo.save(prof);
         return new ResponseEntity<>(new StaticFields(),HttpStatus.OK);
     }
 

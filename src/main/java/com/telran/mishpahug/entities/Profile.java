@@ -2,10 +2,7 @@ package com.telran.mishpahug.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 
 @Entity
 @Table(name="profiles")
@@ -40,6 +38,11 @@ public class Profile implements Serializable {
     @ManyToMany(mappedBy = "profilesOfLanguage")
     @JsonIgnore
     Set<Languages> languagesOfProfile;
+
+
+    @ManyToMany(mappedBy = "profilesOfHoliday")
+    @JsonIgnore
+    Set<Holiday> holidaysOfProfile;
 
     @OneToMany(mappedBy = "owner_email")
     @JsonIgnore

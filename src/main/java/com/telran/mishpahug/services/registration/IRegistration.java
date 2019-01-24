@@ -4,6 +4,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface IRegistration {
 
-    ResponseEntity addNewUser(String token);
+    ResponseEntity addNewUser(String headers);
 
 }
