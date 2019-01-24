@@ -1,8 +1,8 @@
-package com.telran.mishpahug.model;
+package com.telran.mishpahug.services.registration;
 import org.springframework.http.ResponseEntity;
 
 
-public interface IHugAddUser {
+public interface IRegistration {
 
     ResponseEntity addNewUser(String token);
 

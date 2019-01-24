@@ -1,9 +1,8 @@
-package com.telran.mishpahug.model;
+package com.telran.mishpahug.services.registration;
 
 import com.telran.mishpahug.api.ResponseDTO.MessageDTORes;
 import com.telran.mishpahug.entities.Profile;
 import com.telran.mishpahug.entities.StaticFields;
-import com.telran.mishpahug.repository.IHug;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +15,16 @@ import java.util.Optional;
 
 
 @Repository
-public class IHugCRUDModel implements IHugAddUser {
+public class RegistrationCRUDModel implements IRegistration {
 
     @Autowired
-    IHug testdb;
+    com.telran.mishpahug.repository.IRegistration testdb;
 
     @Override
     @Transactional
     public ResponseEntity<Object> addNewUser(String headers) {
         String [] emailPass = parseHeaders(headers);
-        if(!validator(emailPass[0])||emailPass.length<2||emailPass[1].length()<6){
+        if(emailPass.length<2||!validator(emailPass[0])||emailPass[1].length()<6){
             return new ResponseEntity<>(new MessageDTORes(422,"Invalid data!"), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         Optional<Profile> exist = testdb.findById(emailPass[0]);

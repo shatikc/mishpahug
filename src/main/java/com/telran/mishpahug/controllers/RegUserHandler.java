@@ -2,7 +2,7 @@ package com.telran.mishpahug.controllers;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.telran.mishpahug.api.URLConstants;
-import com.telran.mishpahug.model.IHugAddUser;
+import com.telran.mishpahug.services.registration.IRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RegUserHandler {
     @Autowired
-    IHugAddUser hugCrudModel;
+    IRegistration hugCrudModel;
 
     @PostMapping(URLConstants.registrationUser)
     @CrossOrigin
