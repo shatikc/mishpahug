@@ -1,10 +1,8 @@
 package com.telran.mishpahug.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,11 +25,17 @@ public class Picture implements Serializable, Comparator<Picture> {
     private boolean isAvatar;
 
     @ManyToOne
-    Profile owner_email;
+    @JsonIgnore
+    private Profile owner_email;
 
 
     @Override
     public int compare(Picture picA, Picture picB) {
         return picA.isAvatar==picB.isAvatar?0:(picA.isAvatar ? -1 : 1);
+    }
+
+    @Override
+    public String toString() {
+        return "url='" + url;
     }
 }

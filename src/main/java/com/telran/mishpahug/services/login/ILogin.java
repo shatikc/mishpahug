@@ -4,5 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface ILogin {
 
-    ResponseEntity loginUser (String headers);
+    ResponseEntity loginUser (String token);
 }

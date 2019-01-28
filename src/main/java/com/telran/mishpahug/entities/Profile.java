@@ -25,32 +25,33 @@ public class Profile implements Serializable {
     private String email;
 
     @ManyToMany
+    @JsonIgnore
     private Set<Event> events;
 
     @OneToMany(mappedBy = "owner_email")
     @JsonIgnore
-    Set<Event> owners;
+    private Set<Event> owners;
 
     @ManyToMany(mappedBy = "profilesOfFood")
     @JsonIgnore
-    Set<FoodProfile> foodsOfProfile;
+    private Set<FoodProfile> foodsOfProfile;
 
     @ManyToMany(mappedBy = "profilesOfLanguage")
     @JsonIgnore
-    Set<Languages> languagesOfProfile;
+    private Set<Languages> languagesOfProfile;
 
 
     @ManyToMany(mappedBy = "profilesOfHoliday")
     @JsonIgnore
-    Set<Holiday> holidaysOfProfile;
+    private Set<Holiday> holidaysOfProfile;
 
     @OneToMany(mappedBy = "owner_email")
     @JsonIgnore
-    Set<Picture> pictures;
+    private Set<Picture> pictures;
 
     @OneToMany(mappedBy = "ownerOfNotification")
     @JsonIgnore
-    Set<Notification> notifications;
+    private Set<Notification> notifications;
 
     private String password;
     private String firstName;

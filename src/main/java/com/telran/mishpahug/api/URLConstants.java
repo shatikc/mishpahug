@@ -9,4 +9,7 @@ public interface URLConstants {
     String updateUserProfile = "/user/profile";
     String addFirebaseToken = "/user/firebasetoken/add";
 
+    //Delete requests:
+    String deleteFirebaseToken = "/user/firebasetoken/delete";
+
 }

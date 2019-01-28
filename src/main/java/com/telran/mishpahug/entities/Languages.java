@@ -1,5 +1,6 @@
 package com.telran.mishpahug.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Languages implements Serializable {
     private String language;
 
     @ManyToMany
+    @JsonIgnore
     Set<Profile> profilesOfLanguage;
 }

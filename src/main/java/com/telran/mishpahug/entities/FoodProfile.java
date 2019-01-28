@@ -1,9 +1,7 @@
 package com.telran.mishpahug.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,5 +24,7 @@ public class FoodProfile implements Serializable {
     private String food;
 
     @ManyToMany
-    Set<Profile> profilesOfFood;
+    @JsonIgnore
+    private Set<Profile> profilesOfFood;
+
 }
