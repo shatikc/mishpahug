@@ -12,4 +12,7 @@ public interface URLConstants {
     //Delete requests:
     String deleteFirebaseToken = "/user/firebasetoken/delete";
 
+    //Get requests:
+    String getUser = "/user/profile";
+
 }
