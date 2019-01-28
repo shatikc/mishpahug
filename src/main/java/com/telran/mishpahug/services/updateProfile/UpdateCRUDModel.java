@@ -77,7 +77,8 @@ public class UpdateCRUDModel implements IUpdateProfile {
         boolean isLastName =  Pattern.matches("\\p{Alpha}+",data.getLastName());
         boolean isPhoneNumber = Pattern.matches("\\d+",data.getPhoneNumber());
         boolean isDateOfBirth = isLocalDate(data.getDateOfBirth());
-        if(isFirstName){ if(isLastName){ if(isPhoneNumber){ return isDateOfBirth; } } }
+        boolean isDescription = data.getDescription().length() <= 300;
+        if(isFirstName){ if(isLastName){ if(isPhoneNumber){ if(isDescription) { return isDateOfBirth; } } } }
         return false;
     }
 
