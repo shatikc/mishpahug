@@ -49,7 +49,7 @@ public class Profile implements Serializable {
     @JsonIgnore
     private Set<Picture> pictures;
 
-    @OneToMany(mappedBy = "ownerOfNotification")
+    @OneToMany(mappedBy = "ownerEmail")
     @JsonIgnore
     private Set<Notification> notifications;
 

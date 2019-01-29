@@ -11,6 +11,6 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Getter
 
-public class ListNotifications implements Serializable {
-    private ArrayList<Notification> notifications;
+public class ListNotificationsDTORes implements Serializable {
+    private ArrayList<NotificationDTORes> notifications;
 }

@@ -15,5 +15,6 @@ public interface URLConstants {
     //Get requests:
     String getUser = "/user/profile";
     String getCountUnreadNotifications = "/notification/count";
+    String getListNotifications = "/notification/list";
 
 }
