@@ -1,9 +1,6 @@
 package com.telran.mishpahug.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 
 @Entity
 @Table(name="food_event")
@@ -26,4 +24,6 @@ public class FoodEvent implements Serializable {
 
     @ManyToMany
     Set<Event> eventsOfFood;
+
+
 }
