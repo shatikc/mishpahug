@@ -2,8 +2,9 @@ package com.telran.mishpahug.services.myEventInfo;
 
 import com.telran.mishpahug.api.ResponseDTO.MessageDTORes;
 import com.telran.mishpahug.api.ResponseDTO.MyEventInfoDTORes.MyEventDTORes;
-import com.telran.mishpahug.entities.Event;
-import com.telran.mishpahug.entities.Profile;
+import com.telran.mishpahug.api.ResponseDTO.MyEventInfoDTORes.SubscriberInPendingDTORes;
+import com.telran.mishpahug.api.ResponseDTO.MyEventInfoDTORes.SubscriberInProgressDTORes;
+import com.telran.mishpahug.entities.*;
 import com.telran.mishpahug.repository.myEvent.IMyEventFoodCRUD;
 import com.telran.mishpahug.repository.myEvent.IMyEventInfoCRUD;
 import com.telran.mishpahug.repository.myEvent.IMyEventProfileCRUD;
@@ -13,10 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-
-
-//IS NOT FINISHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 @Repository
 public class MyEventInfoCRUDModel implements IMyEventInfo {
@@ -41,7 +43,7 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
         if (profile != null) {
             Event event = eventInfoRepo.findEvent(eventId);
             if (event != null) {
-                return new ResponseEntity<>(event, HttpStatus.OK);
+                return new ResponseEntity<>(setMyEventDTORes(event), HttpStatus.OK);
             }
                 return new ResponseEntity<>(new MessageDTORes(409,"User is not associated with the event!"),
                         HttpStatus.UNPROCESSABLE_ENTITY);
@@ -51,8 +53,38 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
 
 
         private MyEventDTORes setMyEventDTORes(Event event){
+        ArrayList<String> foods = (ArrayList<String>) event.getFoodsOfEvent().stream().
+                map(FoodEvent::getFood).collect(Collectors.toList());
+        ArrayList<SubscriberInProgressDTORes> subscribers =
+                (ArrayList<SubscriberInProgressDTORes>) getListSubscribersDTO(event.getSubscribers(),
+                        event.getStatus());
+         return new MyEventDTORes(event.getEventId(),event.getTitle(),event.getHoliday(),
+                    event.getConfession(),event.getDate(),event.getTime(),event.getDuration(),
+                    foods,event.getDescription(),event.getStatus(),subscribers);
+        }
 
-         return null;
+        private List<SubscriberInProgressDTORes> getListSubscribersDTO(Set<Profile> profiles, String status){
+          List<SubscriberInProgressDTORes> res = new ArrayList<>();
+            for (Profile el:profiles) {
+                res.add(getSubscriberFromProfile(el,status));
+            }
+          return res;
+        }
+
+        private SubscriberInProgressDTORes getSubscriberFromProfile(Profile profile, String status){
+            ArrayList<String> pictures = parseEvent.getListOfPictures(profile);
+            ArrayList<String> foods = parseEvent.getListOfFoods(profile);
+            ArrayList<String> languages = parseEvent.getListOfLanguages(profile);
+            if(status.equals("In progress")){
+            return new SubscriberInProgressDTORes(profile.getUserId(),
+                    profile.getFullName(), profile.getConfession(),profile.getGender(),profile.getAge(),
+                    pictures,profile.getMaritalStatus(),foods,languages,profile.getRate(),
+                    profile.getNumberOfVoters(), false);
+        }
+        return new SubscriberInPendingDTORes(profile.getUserId(),
+                    profile.getFullName(), profile.getConfession(),profile.getGender(),profile.getAge(),
+                    pictures,profile.getMaritalStatus(),foods,languages,profile.getRate(),
+                    profile.getNumberOfVoters(), false,profile.getPhoneNumber());
         }
 
     }

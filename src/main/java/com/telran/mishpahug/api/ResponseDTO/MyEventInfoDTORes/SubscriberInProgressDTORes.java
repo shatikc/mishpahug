@@ -3,6 +3,7 @@ package com.telran.mishpahug.api.ResponseDTO.MyEventInfoDTORes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 
 public class SubscriberInProgressDTORes implements Serializable {
 

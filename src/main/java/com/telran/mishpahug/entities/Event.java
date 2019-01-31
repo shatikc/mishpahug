@@ -67,5 +67,4 @@ public class Event implements Serializable {
         this.lat = lat;
         this.lng = lng;
     }
-
 }
