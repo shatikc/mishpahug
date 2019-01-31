@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -22,9 +21,14 @@ public class Profile implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long userId;
+
     private String email;
 
-    @ManyToMany
+
+    //Here is happening the connection between Profile and Event in format ManyToMany
+    @ManyToMany(mappedBy = "subscribers")
     @JsonIgnore
     private Set<Event> events;
 
@@ -68,4 +72,33 @@ public class Profile implements Serializable {
     private String fullName;
     private int age;
 
+    public Profile(String email, Set<Event> events, Set<Event> owners, Set<FoodProfile> foodsOfProfile,
+                   Set<Languages> languagesOfProfile, Set<Holiday> holidaysOfProfile, Set<Picture> pictures,
+                   Set<Notification> notifications, String password, String firstName, String lastName,
+                   LocalDate dateOfBirth, String gender, String maritalStatus, String confession,
+                   String phoneNumber, String description, double rate, int numberOfVoters,
+                   String firebaseToken, String fullName, int age) {
+        this.email = email;
+        this.events = events;
+        this.owners = owners;
+        this.foodsOfProfile = foodsOfProfile;
+        this.languagesOfProfile = languagesOfProfile;
+        this.holidaysOfProfile = holidaysOfProfile;
+        this.pictures = pictures;
+        this.notifications = notifications;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.maritalStatus = maritalStatus;
+        this.confession = confession;
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.rate = rate;
+        this.numberOfVoters = numberOfVoters;
+        this.firebaseToken = firebaseToken;
+        this.fullName = fullName;
+        this.age = age;
+    }
 }

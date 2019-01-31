@@ -24,7 +24,7 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long eventId;
 
-    @ManyToMany(mappedBy = "events")
+    @ManyToMany
     @JsonIgnore
     private Set<Profile> subscribers;
 

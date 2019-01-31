@@ -30,12 +30,12 @@ public class RegistrationCRUDModel implements IRegistration {
         if(emailPass.length<2||!validator(emailPass[0])||emailPass[1].length()<6){
             return new ResponseEntity<>(new MessageDTORes(422,"Invalid data!"), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        Optional exist = regRepo.findById(emailPass[0]);
-        if(exist.isPresent()){return new ResponseEntity<>(new MessageDTORes(409,"User exists!"),HttpStatus.CONFLICT);}
-        Profile prof = new Profile();
-        prof.setEmail(emailPass[0]);
-        prof.setPassword(emailPass[1]);
-        regRepo.save(prof);
+        Profile profile = regRepo.findProfile(emailPass[0],emailPass[1]);
+        if(profile!=null){return new ResponseEntity<>(new MessageDTORes(409,"User exists!"),HttpStatus.CONFLICT);}
+        profile = new Profile();
+        profile.setEmail(emailPass[0]);
+        profile.setPassword(emailPass[1]);
+        regRepo.save(profile);
         return new ResponseEntity<>(new StaticFields(),HttpStatus.OK);
     }
 
