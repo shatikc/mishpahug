@@ -18,6 +18,7 @@ public interface URLConstants {
     String getCountUnreadNotifications = "/notification/count";
     String getListNotifications = "/notification/list";
     String getMyEventInfo = "/event/own/{eventId}";
+    String getListParticipations = "/event/participationlist";
 
     //Put requests:
     String notificationIsRead = "/notification/isRead/{notificationId}";

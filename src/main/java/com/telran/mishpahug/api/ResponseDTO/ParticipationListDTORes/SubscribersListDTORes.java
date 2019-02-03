@@ -13,5 +13,5 @@ import java.util.ArrayList;
 @Getter
 
 public class SubscribersListDTORes implements Serializable {
-    private ArrayList<SubscribedEventDTORes> events;
+    private ArrayList<EventParentDTORes> events;
 }

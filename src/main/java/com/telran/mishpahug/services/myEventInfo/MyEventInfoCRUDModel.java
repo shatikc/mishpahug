@@ -71,6 +71,8 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
           return res;
         }
 
+
+        //Check this function after adding Request AddEvent
         private SubscriberInProgressDTORes getSubscriberFromProfile(Profile profile, String status,Event event){
             ArrayList<String> pictures = parseEvent.getListOfPictures(profile);
             ArrayList<String> foods = parseEvent.getListOfFoods(profile);
