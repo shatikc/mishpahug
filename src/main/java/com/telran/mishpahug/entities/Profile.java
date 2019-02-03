@@ -57,6 +57,10 @@ public class Profile implements Serializable {
     @JsonIgnore
     private Set<Notification> notifications;
 
+    @OneToMany(mappedBy = "userId")
+    @JsonIgnore
+    private Set<Invited> invited;
+
     private String password;
     private String firstName;
     private String lastName;

@@ -35,6 +35,10 @@ public class Event implements Serializable {
     @JsonIgnore
     Set<FoodEvent> foodsOfEvent;
 
+    @OneToMany(mappedBy = "eventId")
+    @JsonIgnore
+    Set<Invited> invited;
+
     private String title;
     private String holiday;
     private String confession;

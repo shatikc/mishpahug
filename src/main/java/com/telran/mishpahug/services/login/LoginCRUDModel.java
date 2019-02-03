@@ -27,13 +27,15 @@ public class LoginCRUDModel implements ILogin {
     public ResponseEntity loginUser(String token) {
         String [] emailPass = parserLog.parseToken(token);
         Profile profile = logRepo.findProfile(emailPass[0], emailPass[1]);
-        if(profile==null){return new ResponseEntity<>(new MessageDTORes(401,"Wrong login or password!"), HttpStatus.UNAUTHORIZED);}
+        if(profile==null){return new ResponseEntity<>(new MessageDTORes(401,"Wrong login or password!"),
+                HttpStatus.UNAUTHORIZED);}
         Set<FoodProfile> foods = profile.getFoodsOfProfile();
         Set<Languages> languages = profile.getLanguagesOfProfile();
         if(profile.getConfession()==null||profile.getGender()==null||profile.getMaritalStatus()==null||
                 foods==null||languages==null||profile.getDescription()==null||profile.getFirstName()==null
         ||profile.getLastName()==null||profile.getPhoneNumber()==null||profile.getDateOfBirth()==null){
-            return new ResponseEntity<>(new MessageDTORes(409,"User has empty profile!"),HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new MessageDTORes(409,"User has empty profile!"),
+                    HttpStatus.CONFLICT);
         }
         LoginUserDTORes response = new LoginUserDTORes(profile.getFirstName(),profile.getLastName(),
                 profile.getDateOfBirth(),profile.getGender(), profile.getMaritalStatus(),

@@ -57,34 +57,38 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
                 map(FoodEvent::getFood).collect(Collectors.toList());
         ArrayList<SubscriberInProgressDTORes> subscribers =
                 (ArrayList<SubscriberInProgressDTORes>) getListSubscribersDTO(event.getSubscribers(),
-                        event.getStatus());
+                        event.getStatus(),event);
          return new MyEventDTORes(event.getEventId(),event.getTitle(),event.getHoliday(),
                     event.getConfession(),event.getDate(),event.getTime(),event.getDuration(),
                     foods,event.getDescription(),event.getStatus(),subscribers);
         }
 
-        private List<SubscriberInProgressDTORes> getListSubscribersDTO(Set<Profile> profiles, String status){
+        private List<SubscriberInProgressDTORes> getListSubscribersDTO(Set<Profile> profiles, String status,Event event){
           List<SubscriberInProgressDTORes> res = new ArrayList<>();
             for (Profile el:profiles) {
-                res.add(getSubscriberFromProfile(el,status));
+                res.add(getSubscriberFromProfile(el,status,event));
             }
           return res;
         }
 
-        private SubscriberInProgressDTORes getSubscriberFromProfile(Profile profile, String status){
+        private SubscriberInProgressDTORes getSubscriberFromProfile(Profile profile, String status,Event event){
             ArrayList<String> pictures = parseEvent.getListOfPictures(profile);
             ArrayList<String> foods = parseEvent.getListOfFoods(profile);
             ArrayList<String> languages = parseEvent.getListOfLanguages(profile);
+            List<Invited> list = profile.getInvited().stream().
+                    filter(x->x.getEventId().equals(event.getEventId())).
+                    collect(Collectors.toList());
+            boolean invited = list.size()>0;
             if(status.equals("In progress")){
             return new SubscriberInProgressDTORes(profile.getUserId(),
                     profile.getFullName(), profile.getConfession(),profile.getGender(),profile.getAge(),
                     pictures,profile.getMaritalStatus(),foods,languages,profile.getRate(),
-                    profile.getNumberOfVoters(), false);
+                    profile.getNumberOfVoters(), invited);
         }
         return new SubscriberInPendingDTORes(profile.getUserId(),
                     profile.getFullName(), profile.getConfession(),profile.getGender(),profile.getAge(),
                     pictures,profile.getMaritalStatus(),foods,languages,profile.getRate(),
-                    profile.getNumberOfVoters(), false,profile.getPhoneNumber());
+                    profile.getNumberOfVoters(), invited,profile.getPhoneNumber());
         }
 
     }
