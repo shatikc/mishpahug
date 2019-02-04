@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
@@ -36,15 +35,17 @@ public class PartListCRUDModel implements IPartList {
         String[] emailPass = parsePartList.parseToken(token64);
         Profile profile = partListRepo.findProfile(emailPass[0],emailPass[1]);
         if(profile!=null){
-              Set<Event> filtered = filterEvents(profile);
+              ArrayList<Event> filtered = filterEvents(profile);
               return new ResponseEntity<>(getListEventDTORes(filtered,profile),HttpStatus.OK);
         }
         return new ResponseEntity<>("{{Error_401_sample}}", HttpStatus.UNAUTHORIZED);
     }
 
 
-    private Set<Event> filterEvents(Profile profile){
-        Set<Event> events = profile.getEvents();
+    private ArrayList<Event> filterEvents(Profile profile){
+        ArrayList<Event> events = new ArrayList<>();
+        events.addAll(profile.getEvents());
+        events.sort((a,b)->a.compare(a,b));
         List<Long> invited = profile.getInvited().stream().
                 filter(Invited::isVoited).map(Invited::getInvitedId).collect(Collectors.toList());
         for (Event el:events) {
@@ -57,7 +58,7 @@ public class PartListCRUDModel implements IPartList {
         return events;
     }
 
-    private SubscribersListDTORes getListEventDTORes(Set<Event> events, Profile profile){
+    private SubscribersListDTORes getListEventDTORes(ArrayList<Event> events, Profile profile){
         ArrayList<EventParentDTORes> list = new ArrayList<>();
         for (Event element:events) {
             EventParentDTORes item = getEventParentDTO(element,profile);

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.Set;
 
 
@@ -16,7 +17,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="event")
-public class Event implements Serializable {
+public class Event implements Serializable, Comparator<Event> {
 
     private static final long serialVersionUID = 1L;
 
@@ -70,5 +71,10 @@ public class Event implements Serializable {
         this.place_id = place_id;
         this.lat = lat;
         this.lng = lng;
+    }
+
+    @Override
+    public int compare(Event a, Event b) {
+        return a.date.equals(b.date)?0:a.date.isBefore(b.date)?-1:1;
     }
 }
