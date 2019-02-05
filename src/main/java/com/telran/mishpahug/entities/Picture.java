@@ -4,15 +4,11 @@ package com.telran.mishpahug.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Comparator;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 
@@ -20,7 +16,11 @@ import java.util.Comparator;
 @Table(name="picture")
 public class Picture implements Serializable, Comparator<Picture> {
     private static final long serialVersionUID = 1L;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long pictureId;
+
     private String url;
     private boolean isAvatar;
 
@@ -28,6 +28,11 @@ public class Picture implements Serializable, Comparator<Picture> {
     @JsonIgnore
     private Profile owner_email;
 
+    public Picture(String url, boolean isAvatar, Profile owner_email) {
+        this.url = url;
+        this.isAvatar = isAvatar;
+        this.owner_email = owner_email;
+    }
 
     @Override
     public int compare(Picture picA, Picture picB) {

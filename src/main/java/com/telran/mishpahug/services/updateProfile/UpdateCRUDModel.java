@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -70,6 +71,9 @@ public class UpdateCRUDModel implements IUpdateProfile {
         profile.setFoodsOfProfile(setProf);
         Set<Languages> setLang = setNewLang(data.getLanguages(),profile);
         profile.setLanguagesOfProfile(setLang);
+        profile.setFullName(data.getFirstName()+" "+data.getLastName());
+        int age = Period.between(LocalDate.parse(data.getDateOfBirth()),LocalDate.now()).getYears();
+        profile.setAge(age);
     }
 
     private boolean validateProfUpdate(UpdateProfileDTO data){
