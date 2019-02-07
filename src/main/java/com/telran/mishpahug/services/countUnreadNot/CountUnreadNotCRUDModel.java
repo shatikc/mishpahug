@@ -25,7 +25,7 @@ public class CountUnreadNotCRUDModel implements ICountUnreadNot {
         String [] emailPass = parseCount.parseToken(token64);
         Profile profile = countRepo.findProfile(emailPass[0], emailPass[1]);
         if(profile!=null){
-            long count = profile.getNotifications().stream().filter(x->x.isRead()==false).count();
+            long count = profile.getNotifications().stream().filter(x->!x.isRead()).count();
             return new ResponseEntity<>(new CountUnreadNotDTORes(count),HttpStatus.OK);
         }
         return new ResponseEntity<>("{{Error_401_sample}}", HttpStatus.UNAUTHORIZED);

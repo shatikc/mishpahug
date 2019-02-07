@@ -11,6 +11,6 @@ import java.io.Serializable;
 @Getter
 
 public class MessageDTORes implements Serializable {
-    private int code;
+    private long code;
     private String message;
 }

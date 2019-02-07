@@ -92,7 +92,7 @@ public class PartListCRUDModel implements IPartList {
                 map(FoodProfile::getFood).collect(Collectors.toList());
         ArrayList<String> lang = (ArrayList<String>) profile.getLanguagesOfProfile().stream().
                 map(Languages::getLanguage).collect(Collectors.toList());
-        if(status.equals("In pending")){
+        if(status.equals("Pending")){
             return  new OwnerPhoneDTORes(profile.getFullName(),profile.getConfession(),profile.getGender(),
                     profile.getAge(),pictures,profile.getMaritalStatus(),foods,lang,profile.getRate(),
                     profile.getNumberOfVoters(),profile.getPhoneNumber());
