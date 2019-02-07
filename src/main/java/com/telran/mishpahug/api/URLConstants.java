@@ -24,4 +24,5 @@ public interface URLConstants {
     String notificationIsRead = "/notification/isRead/{notificationId}";
     String voteForEvent = "/event/vote/{eventId}/{voteCount}";
     String changeStatusEvent = "/event/pending/{eventId}";
+    String subscribeToEvent = "/event/subscription/{eventId}";
 }
