@@ -26,4 +26,5 @@ public interface URLConstants {
     String changeStatusEvent = "/event/pending/{eventId}";
     String subscribeToEvent = "/event/subscription/{eventId}";
     String unsubscribeFromEvent = "/event/unsubscription/{eventId}";
+    String inviteToEvent = "/event/invitation/{eventId}/{userId}";
 }
