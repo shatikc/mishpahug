@@ -25,4 +25,5 @@ public interface URLConstants {
     String voteForEvent = "/event/vote/{eventId}/{voteCount}";
     String changeStatusEvent = "/event/pending/{eventId}";
     String subscribeToEvent = "/event/subscription/{eventId}";
+    String unsubscribeFromEvent = "/event/unsubscription/{eventId}";
 }
