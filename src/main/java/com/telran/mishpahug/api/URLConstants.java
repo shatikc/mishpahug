@@ -22,5 +22,5 @@ public interface URLConstants {
 
     //Put requests:
     String notificationIsRead = "/notification/isRead/{notificationId}";
-
+    String voteForEvent = "/event/vote/{eventId}/{voteCount}";
 }
