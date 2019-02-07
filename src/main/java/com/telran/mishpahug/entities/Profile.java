@@ -26,8 +26,6 @@ public class Profile implements Serializable {
 
     private String email;
 
-
-    //Here is happening the connection between Profile and Event in format ManyToMany
     @ManyToMany(mappedBy = "subscribers")
     @JsonIgnore
     private Set<Event> events;
