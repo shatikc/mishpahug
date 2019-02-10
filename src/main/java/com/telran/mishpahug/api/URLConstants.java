@@ -20,6 +20,7 @@ public interface URLConstants {
     String getMyEventInfo = "/event/own/{eventId}";
     String getListParticipations = "/event/participationlist";
     String subscribedEventInfo = "/event/subscribed/{eventId}";
+    String myEventList = "/event/currentlist";
 
     //Put requests:
     String notificationIsRead = "/notification/isRead/{notificationId}";
