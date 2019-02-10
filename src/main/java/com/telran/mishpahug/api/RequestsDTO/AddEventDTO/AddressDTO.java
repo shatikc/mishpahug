@@ -4,14 +4,21 @@ import com.telran.mishpahug.api.ResponseDTO.ListOfEventsInProgressDTOResponse.Ad
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
+@Setter
 
 public class AddressDTO extends AddressDTORes  implements Serializable {
     private String place_id;
     private LocationDTO location;
+
+    public AddressDTO(String city, String place_id, LocationDTO location) {
+        super(city);
+        this.place_id = place_id;
+        this.location = location;
+    }
 }
