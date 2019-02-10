@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @NoArgsConstructor
@@ -16,7 +17,7 @@ public class MyEventHistoryDTORes implements Serializable {
     private String title;
     private String holiday;
     private String confession;
-    private String date;
+    private LocalDate date;
     private ArrayList<String> food;
     private String description;
     private String status;
