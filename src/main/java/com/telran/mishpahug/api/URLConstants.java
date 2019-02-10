@@ -22,6 +22,7 @@ public interface URLConstants {
     String subscribedEventInfo = "/event/subscribed/{eventId}";
     String myEventList = "/event/currentlist";
     String myEventsHistory = "/event/historylist";
+    String eventListForCalendar = "/event/calendar/{month}";
 
     //Put requests:
     String notificationIsRead = "/notification/isRead/{notificationId}";
