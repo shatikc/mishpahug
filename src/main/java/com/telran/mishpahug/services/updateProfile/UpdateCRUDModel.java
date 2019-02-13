@@ -53,8 +53,7 @@ public class UpdateCRUDModel implements IUpdateProfile {
         }
         setAllNewFieldsOfProfile(profile, data);
         updateRepo.save(profile);
-        LoginUserDTORes response = getLoginUserDTO(profile, data);
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return new ResponseEntity<>(getLoginUserDTO(profile,data),HttpStatus.OK);
     }
 
     private void setAllNewFieldsOfProfile(Profile profile, UpdateProfileDTO data){
