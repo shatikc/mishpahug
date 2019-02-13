@@ -29,20 +29,30 @@ public class LoginCRUDModel implements ILogin {
         Profile profile = logRepo.findProfile(emailPass[0], emailPass[1]);
         if(profile==null){return new ResponseEntity<>(new MessageDTORes(401,"Wrong login or password!"),
                 HttpStatus.UNAUTHORIZED);}
+        if(!isProfileFilled(profile)){
+            return new ResponseEntity<>(new MessageDTORes(409,"User has empty profile!"),
+                    HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(getResponseDTO(profile), HttpStatus.OK);
+    }
+
+    private boolean isProfileFilled(Profile profile){
         Set<FoodProfile> foods = profile.getFoodsOfProfile();
         Set<Languages> languages = profile.getLanguagesOfProfile();
         if(profile.getConfession()==null||profile.getGender()==null||profile.getMaritalStatus()==null||
                 foods==null||languages==null||profile.getDescription()==null||profile.getFirstName()==null
         ||profile.getLastName()==null||profile.getPhoneNumber()==null||profile.getDateOfBirth()==null){
-            return new ResponseEntity<>(new MessageDTORes(409,"User has empty profile!"),
-                    HttpStatus.CONFLICT);
+            return false;
         }
-        LoginUserDTORes response = new LoginUserDTORes(profile.getFirstName(),profile.getLastName(),
+        return true;
+    }
+
+    private LoginUserDTORes getResponseDTO(Profile profile){
+        return new LoginUserDTORes(profile.getFirstName(),profile.getLastName(),
                 profile.getDateOfBirth(),profile.getGender(), profile.getMaritalStatus(),
                 profile.getConfession(),sortPictures(profile.getPictures()),profile.getPhoneNumber(),
                 getFoodStrings(profile.getFoodsOfProfile()),getLanguagesStrings(profile.getLanguagesOfProfile()),
                 profile.getDescription(), profile.getRate(), profile.getNumberOfVoters());
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     private ArrayList<String>sortPictures(Set<Picture> pictures){
