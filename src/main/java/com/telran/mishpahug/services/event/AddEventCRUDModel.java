@@ -1,6 +1,7 @@
 package com.telran.mishpahug.services.event;
 
 import com.telran.mishpahug.api.RequestsDTO.AddEventDTO.AddEventDTO;
+import com.telran.mishpahug.api.RequestsDTO.AddEventDTO.AddressDTO;
 import com.telran.mishpahug.api.ResponseDTO.MessageDTORes;
 import com.telran.mishpahug.entities.Event;
 import com.telran.mishpahug.entities.FoodEvent;
@@ -129,9 +130,9 @@ public class AddEventCRUDModel implements IAddEvent {
     }
 
     private boolean validateInput(AddEventDTO event){
-        if(event.getHoliday()==null||event.getConfession()==null||event.getFood()==null
-        ||event.getAddress()==null||event.getDate()==null||event.getTime()==null||event.getTitle()==null
-        ||event.getDescription()==null||event.getDuration()==0){ return false;}
+        if(event.getHoliday().length()==0||event.getConfession().length()==0||event.getFood()==null
+        ||!isAddress(event.getAddress())||event.getDate()==null||event.getTime()==null||event.getTitle().length()==0
+        ||event.getDescription().length()==0||event.getDuration()<=0){ return false;}
         boolean isDate = isLocalDate(event.getDate());
         boolean isTime = isLocalTime(event.getTime());
         boolean isTitle = event.getTitle().length()<21;
@@ -139,6 +140,13 @@ public class AddEventCRUDModel implements IAddEvent {
         boolean isDuration = event.getDuration()<2881;
         if(isDate){ if(isTime){ if(isTitle){ if(isDescription){ return isDuration; } } } }
         return false;
+    }
+
+    private boolean isAddress(AddressDTO address){
+        if(address==null||address.getCity().length()==0||address.getPlace_id().length()==0||
+        address.getLocation()==null||address.getLocation().getLat()<=0||
+        address.getLocation().getLng()<=0){return false;}
+        return true;
     }
 
     private boolean isLocalDate(String date){
