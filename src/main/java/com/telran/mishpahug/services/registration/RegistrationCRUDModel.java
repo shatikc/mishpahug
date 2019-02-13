@@ -11,7 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional;
+
+import javax.validation.constraints.Email;
 
 
 @Repository
@@ -43,7 +44,19 @@ public class RegistrationCRUDModel implements IRegistration {
     private boolean validator(String email){
         if(email.equals("")){return false;}
         email = email.trim();
-        return new EmailValidator().isValid(email, null);
+        if(validateDomainPart(email)){
+            return new EmailValidator().isValid(email, null);
+        }
+        return false;
+    }
+
+    private boolean validateDomainPart(String email){
+        String[]parts = email.split("@");
+        String[]domainPart = parts[1].split("\\.");
+        if(domainPart.length==2){
+            return domainPart[1].length()>0;
+            }
+        return false;
     }
 
 }
