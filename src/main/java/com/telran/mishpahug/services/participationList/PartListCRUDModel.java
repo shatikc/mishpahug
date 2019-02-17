@@ -67,7 +67,6 @@ public class PartListCRUDModel implements IPartList {
         return new SubscribersListDTORes(list);
     }
 
-
     private EventParentDTORes getEventParentDTO(Event event, Profile profile){
         if(event.getStatus().equals("Done")){
             return new EventParentDTORes(event.getEventId(),event.getTitle(),event.getHoliday(),event.getConfession(),
@@ -76,14 +75,9 @@ public class PartListCRUDModel implements IPartList {
         ArrayList<String> foods = (ArrayList<String>) event.getFoodsOfEvent().stream().
                 map(FoodEvent::getFood).collect(Collectors.toList());
         return new SubscribedEventDTORes(event.getEventId(),event.getTitle(),event.getHoliday(),event.getConfession(),
-                    event.getDate(),event.getDescription(),event.getStatus(),getOwnerDTO(profile,event.getStatus()),
+                    event.getDate(),event.getDescription(),event.getStatus(),getOwnerDTO(event.getOwner_email(),event.getStatus()),
                 event.getTime(),event.getDuration(),new AddressDTORes(event.getCity()),foods);
     }
-
-
-
-
-
 
     private OwnerDTORes getOwnerDTO(Profile profile,String status){
         ArrayList<String> pictures = (ArrayList<String>) profile.getPictures().stream().
