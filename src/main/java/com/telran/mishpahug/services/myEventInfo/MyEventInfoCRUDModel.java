@@ -41,7 +41,7 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
         String[] emailPass = parseEvent.parseToken(token64);
         Profile profile = eventCheckProf.findProfile(emailPass[0], emailPass[1]);
         if (profile != null) {
-            Event event = eventInfoRepo.findEvent(eventId);
+            Event event = getEventIfExist(profile,eventId);
             if (event != null) {
                 return new ResponseEntity<>(setMyEventDTORes(event), HttpStatus.OK);
             }
@@ -51,12 +51,21 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
             return new ResponseEntity<>("{{Error_401_sample}}", HttpStatus.UNAUTHORIZED);
         }
 
+        private Event getEventIfExist(Profile profile,long eventId){
+           List<Event> events = profile.getOwners().stream().filter(x->x.getEventId()==eventId).collect(Collectors.toList());
+           if(events.size()>0){return events.get(0);}
+           return null;
+        }
+
 
         private MyEventDTORes setMyEventDTORes(Event event){
         ArrayList<String> foods = (ArrayList<String>) event.getFoodsOfEvent().stream().
                 map(FoodEvent::getFood).collect(Collectors.toList());
+        Set<Profile> subsc = event.getSubscribers();
+        Set<Profile> invited = event.getInvited().stream().map(Invited::getUserId).collect(Collectors.toSet());
+        subsc.addAll(invited);
         ArrayList<SubscriberInProgressDTORes> subscribers =
-                (ArrayList<SubscriberInProgressDTORes>) getListSubscribersDTO(event.getSubscribers(),
+                (ArrayList<SubscriberInProgressDTORes>) getListSubscribersDTO(subsc,
                         event.getStatus(),event);
          return new MyEventDTORes(event.getEventId(),event.getTitle(),event.getHoliday(),
                     event.getConfession(),event.getDate(),event.getTime(),event.getDuration(),
@@ -71,26 +80,24 @@ public class MyEventInfoCRUDModel implements IMyEventInfo {
           return res;
         }
 
-
-        //Check this function after adding Request AddEvent
         private SubscriberInProgressDTORes getSubscriberFromProfile(Profile profile, String status,Event event){
             ArrayList<String> pictures = parseEvent.getListOfPictures(profile);
             ArrayList<String> foods = parseEvent.getListOfFoods(profile);
             ArrayList<String> languages = parseEvent.getListOfLanguages(profile);
             List<Invited> list = profile.getInvited().stream().
-                    filter(x->x.getEventId().equals(event.getEventId())).
+                    filter(x->x.getEventId().getEventId()==(event.getEventId())).
                     collect(Collectors.toList());
-            boolean invited = list.size()>0;
+            boolean isInvited = list.size()>0;
             if(status.equals("In progress")){
             return new SubscriberInProgressDTORes(profile.getUserId(),
                     profile.getFullName(), profile.getConfession(),profile.getGender(),profile.getAge(),
                     pictures,profile.getMaritalStatus(),foods,languages,profile.getRate(),
-                    profile.getNumberOfVoters(), invited);
+                    profile.getNumberOfVoters(), isInvited);
         }
         return new SubscriberInPendingDTORes(profile.getUserId(),
                     profile.getFullName(), profile.getConfession(),profile.getGender(),profile.getAge(),
                     pictures,profile.getMaritalStatus(),foods,languages,profile.getRate(),
-                    profile.getNumberOfVoters(), invited,profile.getPhoneNumber());
+                    profile.getNumberOfVoters(), isInvited,profile.getPhoneNumber());
         }
 
     }
