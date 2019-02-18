@@ -33,7 +33,7 @@ public class NotifIsReadCRUDModel implements INotifIsRead {
         String[] emailPass = parseNotifRead.parseToken(token64);
         Profile profile = notifIsReadRepo.findProfile(emailPass[0], emailPass[1]);
         if(profile!=null){
-            Notification notification = notificationRepo.getEntitie(notId);
+            Notification notification = notificationRepo.getEntity(notId,profile);
             if(notification!=null){
                 notification.setRead(true);
                 notificationRepo.save(notification);

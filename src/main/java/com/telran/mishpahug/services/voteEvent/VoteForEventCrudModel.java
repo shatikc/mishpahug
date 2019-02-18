@@ -40,7 +40,7 @@ public class VoteForEventCrudModel implements IVoteForEvent {
             }
             putInvitedEvent(event);
             putInvitedProfile(profile,event);
-            putNewRateProfile(profile,vote);
+            putNewRateProfile(event.getOwner_email(),vote);
             voteRepo.save(event);
             voteProfile.save(profile);
             return new ResponseEntity<>(new MessageDTORes(200,"User vote is accepted!"),HttpStatus.OK);
