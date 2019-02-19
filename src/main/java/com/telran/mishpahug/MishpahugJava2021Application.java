@@ -9,10 +9,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class MishpahugJava2021Application {
     public static void main(String[] args) {
-        SpringApplication.run(MishpahugJava2021Application.class, args);
-        /*ConfigurableApplicationContext ctx =  SpringApplication.run(MishpahugJava2021Application.class, args);
-        IEventCleanerRepository eventRepo = ctx.getBean(EventCleaner.class);
-        eventRepo.start;*/
+        ConfigurableApplicationContext ctx =  SpringApplication.run(MishpahugJava2021Application.class, args);
+        EventCleaner eventCleaner = ctx.getBean(EventCleaner.class);
+        eventCleaner.start();
     }
 }
 

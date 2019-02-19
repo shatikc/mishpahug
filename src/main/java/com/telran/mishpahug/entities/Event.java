@@ -25,7 +25,7 @@ public class Event implements Serializable, Comparator<Event> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long eventId;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Profile> subscribers;
 
@@ -76,5 +76,18 @@ public class Event implements Serializable, Comparator<Event> {
     @Override
     public int compare(Event a, Event b) {
         return a.date.equals(b.date)?0:a.date.isBefore(b.date)?-1:1;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventId=" + eventId +
+                ", title='" + title + '\'' +
+                ", holiday='" + holiday + '\'' +
+                ", date=" + date +
+                ", time=" + time +
+                ", duration=" + duration +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
