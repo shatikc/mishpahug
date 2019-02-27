@@ -1,7 +1,11 @@
-package com.telran.mishpahug.services;
+package com.telran.mishpahug.services.daemon;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
 import com.telran.mishpahug.entities.Event;
 import com.telran.mishpahug.entities.Profile;
+import com.telran.mishpahug.repository.IAddFirebaseCRUD;
 import com.telran.mishpahug.repository.IEventCleanerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,19 +23,35 @@ public class EventCleaner extends Thread {
     @Autowired
     IEventCleanerRepository cleanerRepo;
 
+    @Autowired
+    IAddFirebaseCRUD prof;
+
 
     @Override
     @Transactional
     public void run() {
         while(true) {
-            checkEventsNotDone();
-            checkEventsDone();
+            /*checkEventsNotDone();
+            checkEventsDone();*/
             try {
-                Thread.sleep(TimeUnit.HOURS.toMillis(12));
+                Thread.sleep(/*TimeUnit.HOURS.toMillis(12)*/60000);
             } catch (InterruptedException e) {
                 return;
             }
         }
+    }
+
+    private void sendPushNotification(Profile profile) throws FirebaseMessagingException {
+        String registrationToken = profile.getFirebaseToken();
+        System.out.println(registrationToken);
+        Message message = Message.builder()
+                .putData("score", "850")
+                .putData("time", "2:45")
+               /* .setToken(registrationToken)*/
+                .setTopic("test")
+                .build();
+        String response = FirebaseMessaging.getInstance().send(message);
+        System.out.println("Successfully sent message: " + response);
     }
 
     private void checkEventsDone(){
@@ -82,4 +102,5 @@ public class EventCleaner extends Thread {
             //TODO
         }
     }
+
 }

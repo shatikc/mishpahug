@@ -21,6 +21,7 @@ public class ParserExternalLib implements IParser {
     @Override
     public ArrayList<String> getListOfPictures(Profile profile) {
         return (ArrayList<String>) profile.getPictures().stream().
+                sorted((a,b)->a.compare(a,b)).
                 map(Picture::getUrl).collect(Collectors.toList());
     }
 
