@@ -23,6 +23,8 @@ public class ListNotificationsCRUDModel implements IListNotifications {
     @Autowired
     IParser parseList;
 
+
+
     @Override
     @Transactional
     public ResponseEntity getList(String token64) {

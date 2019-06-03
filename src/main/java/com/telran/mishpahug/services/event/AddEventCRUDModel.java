@@ -66,6 +66,7 @@ public class AddEventCRUDModel implements IAddEvent {
     }
 
 
+
     private Event getNewEvent(AddEventDTO eventDTO, Profile profile){
         Event response = new Event();
         response.setTitle(eventDTO.getTitle());

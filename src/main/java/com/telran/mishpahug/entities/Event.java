@@ -10,8 +10,8 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.Set;
 
-
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 
@@ -30,15 +30,15 @@ public class Event implements Serializable, Comparator<Event> {
     private Set<Profile> subscribers;
 
     @ManyToOne
-    Profile owner_email;
+    private Profile owner_email;
 
     @ManyToMany(mappedBy = "eventsOfFood")
     @JsonIgnore
-    Set<FoodEvent> foodsOfEvent;
+    private Set<FoodEvent> foodsOfEvent;
 
     @OneToMany(mappedBy = "eventId")
     @JsonIgnore
-    Set<Invited> invited;
+    private Set<Invited> invited;
 
     private String title;
     private String holiday;

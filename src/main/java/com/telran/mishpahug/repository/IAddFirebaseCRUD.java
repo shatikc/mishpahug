@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IAddFirebaseCRUD extends CrudRepository<Profile, Object> {
 
-@Query("SELECT p FROM Profile p where p.email = :email and p.password = :password")
+    @Query("SELECT p FROM Profile p where p.email = :email and p.password = :password")
     Profile findProfile(String email, String password);
 }
