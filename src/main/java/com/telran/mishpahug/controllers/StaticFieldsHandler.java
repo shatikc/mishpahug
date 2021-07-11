@@ -4,12 +4,11 @@ import com.telran.mishpahug.api.URLConstants;
 import com.telran.mishpahug.entities.StaticFields;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequestMapping("event")
 public class StaticFieldsHandler {
 
     @GetMapping(URLConstants.staticFields)
